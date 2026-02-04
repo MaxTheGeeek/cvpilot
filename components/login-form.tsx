@@ -34,7 +34,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       // Update this route to redirect to an authenticated route. The user already has an active session.
       router.push("/protected")
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+      setError(
+        error instanceof Error ? error.message :
+          typeof error === "object" && error !== null && "message" in error ? (error as { message: string }).message :
+            "An error occurred"
+      )
     } finally {
       setIsLoading(false)
     }
