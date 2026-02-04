@@ -81,4 +81,9 @@
     "typescript": "^5",
     "tw-animate-css": "1.3.3"
   }
+},
+"overrides": {
+  "react": "$react",
+  "react-dom": "$react-dom"
+}
 }
