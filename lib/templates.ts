@@ -12,6 +12,13 @@ export interface Template {
 
 export const templates: Template[] = [
   {
+    id: 'minimalist-blue',
+    name: 'Minimalist Blue',
+    description: 'Clean white background with blue clean typography',
+    style: 'minimal',
+    colors: { primary: '#5a76e0', secondary: '#5a76e0', accent: '#5a76e0' }
+  },
+  {
     id: 'modern-blue',
     name: 'Modern Blue',
     description: 'Clean and contemporary design with blue accents',
