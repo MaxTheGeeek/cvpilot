@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   title: 'CVMaker - Professional Cover Letter Creator',
   description: 'Create stunning cover letters with professional templates. Choose your style, fill in your details, and download your perfect cover letter in seconds.',
   generator: 'v0.app',
+  icons: {
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
+  },
 }
 
 export default function RootLayout({

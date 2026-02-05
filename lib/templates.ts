@@ -3,6 +3,7 @@ export interface Template {
   name: string
   description: string
   style: 'modern' | 'classic' | 'creative' | 'minimal' | 'professional'
+  image?: string
   colors: {
     primary: string
     secondary: string
@@ -12,80 +13,75 @@ export interface Template {
 
 export const templates: Template[] = [
   {
-    id: 'minimalist-blue',
-    name: 'Minimalist Blue',
-    description: 'Clean white background with blue clean typography',
-    style: 'minimal',
-    colors: { primary: '#5a76e0', secondary: '#5a76e0', accent: '#5a76e0' }
-  },
-  {
-    id: 'modern-blue',
-    name: 'Modern Blue',
-    description: 'Clean and contemporary design with blue accents',
-    style: 'modern',
+    id: 'blue-header',
+    name: 'Blue Header',
+    description: 'Professional design with a bold blue header',
+    style: 'professional',
+    image: '/templates/blue-header.png',
     colors: { primary: '#2563eb', secondary: '#1e40af', accent: '#3b82f6' }
   },
   {
-    id: 'classic-black',
-    name: 'Classic Elegance',
-    description: 'Timeless black and white professional layout',
-    style: 'classic',
-    colors: { primary: '#171717', secondary: '#404040', accent: '#737373' }
-  },
-  {
-    id: 'creative-gradient',
-    name: 'Creative Gradient',
-    description: 'Bold gradient header for creative professionals',
-    style: 'creative',
-    colors: { primary: '#7c3aed', secondary: '#a855f7', accent: '#c084fc' }
-  },
-  {
-    id: 'minimal-gray',
-    name: 'Minimal Gray',
-    description: 'Simple and sophisticated minimalist design',
-    style: 'minimal',
-    colors: { primary: '#6b7280', secondary: '#9ca3af', accent: '#d1d5db' }
-  },
-  {
-    id: 'professional-navy',
-    name: 'Professional Navy',
-    description: 'Corporate navy blue for business roles',
-    style: 'professional',
-    colors: { primary: '#1e3a5f', secondary: '#2d4a6f', accent: '#3d5a80' }
-  },
-  {
-    id: 'modern-teal',
-    name: 'Modern Teal',
-    description: 'Fresh teal tones for a standout impression',
+    id: 'green-line',
+    name: 'Green Line sidebar',
+    description: 'Modern layout with a distinctive green sidebar line',
     style: 'modern',
-    colors: { primary: '#0d9488', secondary: '#14b8a6', accent: '#2dd4bf' }
+    image: '/templates/green-line.png',
+    colors: { primary: '#10b981', secondary: '#059669', accent: '#34d399' }
   },
   {
-    id: 'classic-burgundy',
-    name: 'Classic Burgundy',
-    description: 'Rich burgundy for executive positions',
-    style: 'classic',
-    colors: { primary: '#7f1d1d', secondary: '#991b1b', accent: '#b91c1c' }
-  },
-  {
-    id: 'creative-coral',
-    name: 'Creative Coral',
-    description: 'Vibrant coral for design and marketing',
+    id: 'green-header',
+    name: 'Green Header',
+    description: 'Fresh and vibrant design with green accents',
     style: 'creative',
-    colors: { primary: '#f97316', secondary: '#fb923c', accent: '#fdba74' }
+    image: '/templates/green-header.png',
+    colors: { primary: '#059669', secondary: '#047857', accent: '#10b981' }
   },
   {
-    id: 'minimal-sage',
-    name: 'Minimal Sage',
-    description: 'Calming sage green with clean lines',
+    id: 'golden-header',
+    name: 'Golden Header',
+    description: 'Elegant design with golden touches',
+    style: 'classic',
+    image: '/templates/golden-header.png',
+    colors: { primary: '#d97706', secondary: '#b45309', accent: '#f59e0b' }
+  },
+  {
+    id: 'simple-white',
+    name: 'Simple White',
+    description: 'Clean and minimalist white layout',
     style: 'minimal',
-    colors: { primary: '#4d7c0f', secondary: '#65a30d', accent: '#84cc16' }
+    image: '/templates/simple-white.png',
+    colors: { primary: '#374151', secondary: '#1f2937', accent: '#4b5563' }
   },
   {
-    id: 'professional-slate',
-    name: 'Professional Slate',
-    description: 'Modern slate gray for tech industry',
+    id: 'blue-infobox',
+    name: 'Blue Info Box',
+    description: 'Structured layout with a dedicated info box',
+    style: 'modern',
+    image: '/templates/blue-infobox.png',
+    colors: { primary: '#2563eb', secondary: '#1d4ed8', accent: '#60a5fa' }
+  },
+  {
+    id: 'black-footer',
+    name: 'Black Footer',
+    description: 'Sophisticated design with a strong footer',
     style: 'professional',
-    colors: { primary: '#334155', secondary: '#475569', accent: '#64748b' }
+    image: '/templates/black-footer.png',
+    colors: { primary: '#111827', secondary: '#000000', accent: '#374151' }
+  },
+  {
+    id: 'yellow-header',
+    name: 'Yellow Header',
+    description: 'Bright and energetic design',
+    style: 'creative',
+    image: '/templates/yellow-header.png',
+    colors: { primary: '#ca8a04', secondary: '#a16207', accent: '#eab308' }
+  },
+  {
+    id: 'green-title',
+    name: 'Green Title',
+    description: 'Focus on typography with green titles',
+    style: 'creative',
+    image: '/templates/green-title.png',
+    colors: { primary: '#16a34a', secondary: '#15803d', accent: '#22c55e' }
   }
 ]
