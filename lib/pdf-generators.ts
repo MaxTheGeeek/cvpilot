@@ -1,5 +1,8 @@
 import { jsPDF } from 'jspdf'
 
+// Helper to clean URLs for display
+const cleanUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '')
+
 // --- Layout Generators ---
 
 // 1. Standard Header Layout (Blue, Green, Golden, Yellow)
@@ -11,29 +14,42 @@ export function generateHeaderLayout(doc: jsPDF, template: any, personalInfo: an
 
     // Header Background
     doc.setFillColor(template.colors.primary)
-    doc.rect(0, 0, pageWidth, 40, 'F')
+    doc.rect(0, 0, pageWidth, 50, 'F') // Increased height for 2-line contact info
 
     // Name (White, Bold, Large)
     doc.setTextColor(255, 255, 255)
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(26)
-    doc.text(`${personalInfo.firstName} ${personalInfo.lastName}`.toUpperCase(), margin, 25)
+    doc.text(`${personalInfo.firstName} ${personalInfo.lastName}`.toUpperCase(), margin, 20)
 
     // Personal Info (White, Smaller)
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(10)
+    doc.setFontSize(9)
 
-    const contactParts = [
+    // Line 1: Basic Contact
+    const basicContacts = [
         personalInfo.email,
         personalInfo.phone,
         personalInfo.location
     ].filter(Boolean)
 
-    const contactText = contactParts.join('  |  ')
-    doc.text(contactText, margin, 34)
+    if (basicContacts.length > 0) {
+        doc.text(basicContacts.join('  |  '), margin, 30)
+    }
+
+    // Line 2: Social / Portfolio
+    const socialContacts = [
+        personalInfo.linkedin ? cleanUrl(personalInfo.linkedin) : null,
+        personalInfo.github ? cleanUrl(personalInfo.github) : null,
+        personalInfo.portfolio ? cleanUrl(personalInfo.portfolio) : null
+    ].filter(Boolean) as string[]
+
+    if (socialContacts.length > 0) {
+        doc.text(socialContacts.join('  |  '), margin, 38)
+    }
 
     // Content Start
-    let currentY = 55
+    let currentY = 65
 
     // Date
     const currentDate = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
@@ -90,7 +106,7 @@ export function generateHeaderLayout(doc: jsPDF, template: any, personalInfo: an
 export function generateSidebarLayout(doc: jsPDF, template: any, personalInfo: any, companyInfo: any, content: string) {
     const pageWidth = doc.internal.pageSize.getWidth()
     const pageHeight = doc.internal.pageSize.getHeight()
-    const sidebarWidth = 60
+    const sidebarWidth = 65 // Slightly wider to accommodate links
     const margin = 15
 
     // Sidebar Background
@@ -108,7 +124,7 @@ export function generateSidebarLayout(doc: jsPDF, template: any, personalInfo: a
     // Name
     doc.setTextColor(template.colors.primary)
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(22)
+    doc.setFontSize(20) // Slightly smaller to fix breaks
     const nameParts = [personalInfo.firstName, personalInfo.lastName]
     nameParts.forEach(part => {
         doc.text(part.toUpperCase(), margin, sideY)
@@ -130,16 +146,32 @@ export function generateSidebarLayout(doc: jsPDF, template: any, personalInfo: a
         personalInfo.email,
         personalInfo.phone,
         personalInfo.location,
-        personalInfo.linkedin,
-        personalInfo.portfolio
-    ].filter(Boolean)
+        personalInfo.linkedin ? cleanUrl(personalInfo.linkedin) : null,
+        personalInfo.github ? cleanUrl(personalInfo.github) : null,
+        personalInfo.portfolio ? cleanUrl(personalInfo.portfolio) : null
+    ].filter(Boolean) as string[]
 
     contacts.forEach(item => {
         // Basic wrapping for long sidebar text
         const lines = doc.splitTextToSize(item, sidebarWidth - (margin * 2))
         doc.text(lines, margin, sideY)
-        sideY += (lines.length * 5) + 2
+        sideY += (lines.length * 5) + 3
     })
+
+    // Skills Section (if available)
+    if (personalInfo.skills) {
+        sideY += 5
+        doc.setFont('helvetica', 'bold')
+        doc.setFontSize(10)
+        doc.text("SKILLS", margin, sideY)
+
+        sideY += 6
+        doc.setFont('helvetica', 'normal')
+        doc.setFontSize(9)
+
+        const skillLines = doc.splitTextToSize(personalInfo.skills, sidebarWidth - (margin * 2))
+        doc.text(skillLines, margin, sideY)
+    }
 
     // --- Main Content ---
     const mainMargin = sidebarWidth + 20
@@ -211,20 +243,48 @@ export function generateMinimalLayout(doc: jsPDF, template: any, personalInfo: a
     const name = `${personalInfo.firstName} ${personalInfo.lastName}`.toUpperCase()
     doc.text(name, margin, 25)
 
-    // 2. Personal Info (Stacked)
+    // 2. Personal Info (Stacked columns or flowed)
     doc.setTextColor(60, 60, 60)
     doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
 
-    let infoY = 32
-    const infoGap = 4
+    let infoY = 35
 
-    if (personalInfo.location) doc.text(personalInfo.location, margin, infoY), infoY += infoGap
-    if (personalInfo.email) doc.text(personalInfo.email, margin, infoY), infoY += infoGap
-    if (personalInfo.phone) doc.text(personalInfo.phone, margin, infoY), infoY += infoGap
+    // Left Column: Basic
+    const leftColX = margin
+    const rightColX = margin + 80 // Second column starts at 100mm approx
+
+    // Basic Info
+    const basicInfo = [
+        personalInfo.location,
+        personalInfo.email,
+        personalInfo.phone
+    ].filter(Boolean)
+
+    let currentInfoY = infoY
+    basicInfo.forEach(item => {
+        doc.text(item, leftColX, currentInfoY)
+        currentInfoY += 5
+    })
+
+    // Social Info (Right Column)
+    currentInfoY = infoY
+    const socialInfo = [
+        personalInfo.linkedin ? cleanUrl(personalInfo.linkedin) : null,
+        personalInfo.github ? cleanUrl(personalInfo.github) : null,
+        personalInfo.portfolio ? cleanUrl(personalInfo.portfolio) : null
+    ].filter(Boolean) as string[]
+
+    socialInfo.forEach(item => {
+        doc.text(item, rightColX, currentInfoY)
+        currentInfoY += 5
+    })
+
+    // Adjust y to be below the lowest column
+    const maxY = Math.max(infoY + (basicInfo.length * 5), infoY + (socialInfo.length * 5))
 
     // 3. Separator
-    const lineY = infoY + 5
+    const lineY = maxY + 5
     doc.setDrawColor(primaryColor)
     doc.setLineWidth(0.5)
     doc.line(margin, lineY, pageWidth - margin, lineY)
@@ -239,7 +299,6 @@ export function generateMinimalLayout(doc: jsPDF, template: any, personalInfo: a
     doc.text(currentDate, margin, startY)
 
     // Body logic same as others...
-    // (Abbreviated for brevity in this snippet)
     let currentY = startY + 20
 
     doc.text(`Dear Hiring Team,`, margin, currentY)
