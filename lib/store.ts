@@ -20,34 +20,7 @@ export interface CompanyInfo {
   companyAspects: string
 }
 
-export interface CoverLetterState {
-  // ... (rest of interface unchanged, but re-exporting ensures type checks pass)
-  // Current step in the form
-  currentStep: 'templates' | 'personal' | 'company' | 'review' | 'generating' | 'download'
-  // ...
-}
-// Note: In replace_file_content we often need to be careful with large context.
-// Let's target smaller chunks or just valid blocks.
 
-const defaultPersonalInfo: PersonalInfo = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  linkedin: '',
-  github: '',
-  portfolio: '',
-  location: '',
-  phone: '',
-  skills: '',
-}
-
-const defaultCompanyInfo: CompanyInfo = {
-  companyName: '',
-  companyLocation: '',
-  position: '',
-  contactPerson: '',
-  companyAspects: '',
-}
 
 export interface CoverLetterState {
   // Current step in the form
