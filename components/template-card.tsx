@@ -14,15 +14,13 @@ export function TemplateCard({ template, isSelected, onSelect }: TemplateCardPro
   return (
     <button
       onClick={() => onSelect(template.id)}
-      className={cn(
-        'group relative flex flex-col overflow-hidden rounded-xl border-2 bg-card text-left transition-all duration-200 hover:shadow-lg',
-        isSelected
-          ? 'border-primary ring-2 ring-primary/20'
-          : 'border-border hover:border-primary/50'
-      )}
+      className="group relative flex flex-col text-left"
     >
-      {/* Template Preview */}
-      <div className="relative aspect-[210/297] w-full overflow-hidden bg-muted/50">
+      {/* Template Preview (The Card) */}
+      <div className={cn(
+        "relative aspect-[210/297] w-full overflow-hidden rounded-xl border bg-muted/50 transition-all duration-300",
+        isSelected ? "ring-2 ring-primary ring-offset-2" : "group-hover:shadow-md"
+      )}>
         {template.image ? (
           <img
             src={template.image}
@@ -66,13 +64,13 @@ export function TemplateCard({ template, isSelected, onSelect }: TemplateCardPro
             'rounded-full px-4 py-2 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100',
             isSelected ? 'bg-primary text-primary-foreground' : 'bg-background text-foreground shadow-md'
           )}>
-            {isSelected ? 'Selected' : 'Select Template'}
+            {isSelected ? 'Selected' : 'Use Template'}
           </span>
         </div>
       </div>
 
-      {/* Template Info */}
-      <div className="flex flex-col gap-1 p-4">
+      {/* Template Info (Outside Card) */}
+      <div className="mt-3 flex flex-col gap-1 text-left">
         <h3 className="font-semibold text-foreground">{template.name}</h3>
         <p className="text-sm text-muted-foreground line-clamp-2">{template.description}</p>
       </div>
