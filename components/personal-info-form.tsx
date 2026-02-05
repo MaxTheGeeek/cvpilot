@@ -157,6 +157,18 @@ export function PersonalInfoForm() {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="skills">
+                Key Skills <span className="text-muted-foreground text-xs">(e.g. Project Management, Python, Team Leadership)</span>
+              </Label>
+              <Input
+                id="skills"
+                placeholder="List your top 3-5 relevant skills"
+                value={personalInfo.skills || ''}
+                onChange={(e) => setPersonalInfo({ skills: e.target.value })}
+              />
+            </div>
+
             <div className="flex items-center justify-between pt-4">
               <Button
                 type="button"

@@ -9,6 +9,7 @@ export interface PersonalInfo {
   portfolio: string
   location: string
   phone: string
+  skills: string
 }
 
 export interface CompanyInfo {
@@ -16,6 +17,36 @@ export interface CompanyInfo {
   companyLocation: string
   position: string
   contactPerson: string
+  companyAspects: string
+}
+
+export interface CoverLetterState {
+  // ... (rest of interface unchanged, but re-exporting ensures type checks pass)
+  // Current step in the form
+  currentStep: 'templates' | 'personal' | 'company' | 'review' | 'generating' | 'download'
+  // ...
+}
+// Note: In replace_file_content we often need to be careful with large context.
+// Let's target smaller chunks or just valid blocks.
+
+const defaultPersonalInfo: PersonalInfo = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  linkedin: '',
+  github: '',
+  portfolio: '',
+  location: '',
+  phone: '',
+  skills: '',
+}
+
+const defaultCompanyInfo: CompanyInfo = {
+  companyName: '',
+  companyLocation: '',
+  position: '',
+  contactPerson: '',
+  companyAspects: '',
 }
 
 export interface CoverLetterState {
@@ -79,6 +110,7 @@ const defaultPersonalInfo: PersonalInfo = {
   portfolio: '',
   location: '',
   phone: '',
+  skills: '',
 }
 
 const defaultCompanyInfo: CompanyInfo = {
@@ -86,6 +118,7 @@ const defaultCompanyInfo: CompanyInfo = {
   companyLocation: '',
   position: '',
   contactPerson: '',
+  companyAspects: '',
 }
 
 

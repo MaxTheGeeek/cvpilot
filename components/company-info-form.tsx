@@ -27,6 +27,18 @@ export function CompanyInfoForm() {
     updatedContent = updatedContent.replace(/\[Company Name\]/g, companyInfo.companyName || 'your company')
     updatedContent = updatedContent.replace(/\[Your Name\]/g, `${personalInfo.firstName} ${personalInfo.lastName}`)
 
+    // Extended replacement for new fields
+    // regex uses "i" flag for case insensitivity if needed, but strict matching is safer for specific placeholders
+    if (personalInfo.skills) {
+      updatedContent = updatedContent.replace(/\[relevant skills\]/g, personalInfo.skills)
+      updatedContent = updatedContent.replace(/\[relevante Fähigkeiten\]/g, personalInfo.skills)
+    }
+
+    if (companyInfo.companyAspects) {
+      updatedContent = updatedContent.replace(/\[company attributes that appeal to you\]/g, companyInfo.companyAspects)
+      updatedContent = updatedContent.replace(/\[Unternehmensmerkmale\]/g, companyInfo.companyAspects)
+    }
+
     setCoverLetterContent(updatedContent)
     setCurrentStep('review')
   }
@@ -95,6 +107,18 @@ export function CompanyInfoForm() {
                 placeholder="Jane Smith, HR Manager"
                 value={companyInfo.contactPerson}
                 onChange={(e) => setCompanyInfo({ contactPerson: e.target.value })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="companyAspects">
+                Why are you applying? <span className="text-muted-foreground text-xs">(Company attributes that appeal to you)</span>
+              </Label>
+              <Input
+                id="companyAspects"
+                placeholder="e.g. its innovative approach to AI..."
+                value={companyInfo.companyAspects || ''}
+                onChange={(e) => setCompanyInfo({ companyAspects: e.target.value })}
               />
             </div>
 
