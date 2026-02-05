@@ -22,7 +22,7 @@ export function TemplateCard({ template, isSelected, onSelect }: TemplateCardPro
       )}
     >
       {/* Template Preview */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-muted/50">
+      <div className="relative aspect-[210/297] w-full overflow-hidden bg-muted/50">
         {template.image ? (
           <img
             src={template.image}
@@ -74,18 +74,7 @@ export function TemplateCard({ template, isSelected, onSelect }: TemplateCardPro
       {/* Template Info */}
       <div className="flex flex-col gap-1 p-4">
         <h3 className="font-semibold text-foreground">{template.name}</h3>
-        <p className="text-sm text-muted-foreground">{template.description}</p>
-
-        {/* Color swatches */}
-        <div className="mt-2 flex gap-1.5">
-          {Object.values(template.colors).map((color, idx) => (
-            <div
-              key={idx}
-              className="h-4 w-4 rounded-full ring-1 ring-border"
-              style={{ backgroundColor: color }}
-            />
-          ))}
-        </div>
+        <p className="text-sm text-muted-foreground line-clamp-2">{template.description}</p>
       </div>
     </button>
   )
