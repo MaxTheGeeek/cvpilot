@@ -36,6 +36,9 @@ export function CreatorSection() {
   return (
     <section className="py-16 sm:py-20">
       <div className="container mx-auto max-w-6xl px-4">
+        {/* Semantic Heading for SEO */}
+        <h2 className="sr-only">CV and Cover Letter Creator Tool</h2>
+
         {/* Tabs */}
         <div className="mb-10 flex justify-center">
           <div className="inline-flex rounded-lg border border-border bg-muted/50 p-1">
