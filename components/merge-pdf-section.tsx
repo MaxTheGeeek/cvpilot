@@ -5,7 +5,6 @@ import React from "react"
 import { useRef } from 'react'
 import { useCoverLetterStore } from '@/lib/store'
 import { Button } from '@/components/ui/button'
-import { createClient } from '@/lib/supabase/client'
 import { 
   FileText, 
   Plus, 
@@ -49,17 +48,11 @@ export function MergePdfSection() {
     
     setIsMerging(true)
     try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-
       const formData = new FormData()
       pdfFiles.forEach((file, index) => {
         formData.append(`file${index}`, file)
       })
       formData.append('fileCount', String(pdfFiles.length))
-      if (user?.id) {
-        formData.append('userId', user.id)
-      }
 
       const response = await fetch('/api/merge-pdf', {
         method: 'POST',

@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { useCoverLetterStore } from '@/lib/store'
 import { FileText, Loader2 } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
 
 export function GeneratingLoader() {
   const { 
@@ -18,9 +17,6 @@ export function GeneratingLoader() {
   useEffect(() => {
     const generatePdf = async () => {
       try {
-        const supabase = createClient()
-        const { data: { user } } = await supabase.auth.getUser()
-
         const response = await fetch('/api/generate-pdf', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -29,7 +25,7 @@ export function GeneratingLoader() {
             companyInfo,
             coverLetterContent,
             templateId: selectedTemplate,
-            userId: user?.id || null
+            userId: null
           })
         })
 

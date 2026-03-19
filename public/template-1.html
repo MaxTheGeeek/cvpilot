@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume – Marcus Thornton</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .page {
+      width: 794px;
+      background: #ffffff;
+      padding: 48px 52px 40px 52px;
+      color: #2c2c2c;
+    }
+
+    /* ── HEADER ── */
+    .header-name {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #1a1a1a;
+      text-transform: uppercase;
+    }
+
+    .header-rule {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .header-rule .title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #2b6a9e;
+      white-space: nowrap;
+    }
+
+    .header-rule .line {
+      flex: 1;
+      height: 1.5px;
+      background: #2b6a9e;
+    }
+
+    .header-contact {
+      font-size: 12.5px;
+      color: #2c2c2c;
+      margin-top: 6px;
+    }
+
+    /* ── SECTIONS ── */
+    .section { margin-top: 20px; }
+
+    .section-title {
+      font-size: 12.5px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: #2b6a9e;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid #2b6a9e;
+      margin-bottom: 10px;
+    }
+
+    .summary-text {
+      font-size: 12.5px;
+      line-height: 1.65;
+      padding-left: 10px;
+      color: #2c2c2c;
+    }
+
+    .entry { margin-bottom: 14px; }
+
+    .entry-company {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #2c2c2c;
+    }
+
+    .entry-role {
+      font-size: 12.5px;
+      color: #2c2c2c;
+      margin-top: 1px;
+    }
+
+    .entry-role span { font-weight: 400; }
+
+    ul.bullets {
+      list-style: disc;
+      padding-left: 28px;
+      margin-top: 5px;
+    }
+
+    ul.bullets li {
+      font-size: 12px;
+      line-height: 1.65;
+      color: #2c2c2c;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding-left: 10px;
+      gap: 1px 0;
+    }
+
+    .skills-grid span {
+      font-size: 12px;
+      line-height: 1.85;
+      color: #2c2c2c;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 1. NAME -->
+  <div class="header-name">Marcus Thornton</div>
+
+  <!-- 2. ROLE -->
+  <div class="header-rule">
+    <span class="title">Full-Stack Developer</span>
+    <span class="line"></span>
+  </div>
+
+  <!-- 3. CONTACT & ADDRESS -->
+  <div class="header-contact">
+    47 Maple Grove Ave., Springfield, IL 62701 &nbsp;|&nbsp; +1-312-555-0187 &nbsp;|&nbsp; marcus.thornton@devmail.io
+  </div>
+
+  <!-- 4. SUMMARY -->
+  <div class="section">
+    <div class="section-title">Summary</div>
+    <p class="summary-text">
+      Results-driven full-stack developer with 6 years of experience designing, building, and scaling
+      web applications across various industries. Adept at translating complex business requirements
+      into clean, maintainable code. Strong communicator with a track record of leading cross-functional
+      teams and delivering projects on time.
+    </p>
+  </div>
+
+  <!-- 5. WORK EXPERIENCE -->
+  <div class="section">
+    <div class="section-title">Work Experience</div>
+
+    <div class="entry">
+      <div class="entry-company">Nexora Technologies</div>
+      <div class="entry-role">Full-Stack Developer &nbsp;|&nbsp; <span>12 January, 2030 – Present</span></div>
+      <ul class="bullets">
+        <li>Led development of customer-facing dashboards using React and Node.js.</li>
+        <li>Architected RESTful APIs consumed by both web and mobile clients.</li>
+        <li>Reduced page load time by 40% through performance profiling and code splitting.</li>
+        <li>Mentored two junior developers through weekly code reviews and pair programming sessions.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-company">Brightline Digital</div>
+      <div class="entry-role">Junior Web Developer &nbsp;|&nbsp; <span>03 March, 2027 – 18 November, 2029</span></div>
+      <ul class="bullets">
+        <li>Built and maintained marketing websites for a portfolio of 15+ clients.</li>
+        <li>Collaborated with designers to implement pixel-perfect UI components.</li>
+        <li>Integrated third-party APIs including Stripe, Mailchimp, and Google Analytics.</li>
+        <li>Authored internal documentation that reduced onboarding time by 30%.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-company">GreenCart – Freelance</div>
+      <div class="entry-role">Web Developer &nbsp;|&nbsp; <span>08 August, 2026 – 02 October, 2026</span></div>
+      <ul class="bullets">
+        <li>Built a full e-commerce platform for an organic grocery startup, including cart, checkout, and order tracking.</li>
+        <li>Integrated PayPal and Stripe payment gateways with webhook support for real-time order updates.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. SKILLS -->
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <span>React / Vue.js / Next.js</span>
+      <span>Node.js / Express</span>
+      <span>PostgreSQL / MongoDB</span>
+      <span>REST API Design</span>
+      <span>Docker / CI/CD</span>
+      <span>AWS (EC2, S3, RDS)</span>
+      <span>TypeScript</span>
+      <span>Git &amp; Version Control</span>
+      <span>Technical Documentation</span>
+    </div>
+  </div>
+
+  <!-- 7. EDUCATION & CERTIFICATES -->
+  <div class="section">
+    <div class="section-title">Education &amp; Certificates</div>
+
+    <div class="entry">
+      <div class="entry-company">Bachelor of Science in Computer Science – Web Systems &amp; Applications</div>
+      <div class="entry-role">Lakewood State University &nbsp;|&nbsp; <span>2021 – 2025</span></div>
+      <ul class="bullets">
+        <li>Relevant coursework in Distributed Systems, Software Architecture, and Database Engineering.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-company">AWS Certified Developer – Associate</div>
+      <div class="entry-role">Amazon Web Services &nbsp;|&nbsp; <span>Issued June 2026</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-company">Professional Scrum Master I (PSM I)</div>
+      <div class="entry-role">Scrum.org &nbsp;|&nbsp; <span>Issued February 2027</span></div>
+    </div>
+  </div>
+
+  <!-- 8. ADDITIONAL INFORMATION -->
+  <div class="section">
+    <div class="section-title">Additional Information</div>
+    <ul class="bullets">
+      <li><strong>Languages:</strong> English (native), German (B2), Spanish (conversational).</li>
+      <li><strong>Awards:</strong> Best Engineer of the Quarter – Nexora Technologies (Q3 2031), Hackathon Winner – CloudBuild Summit (2030).</li>
+      <li><strong>Activities:</strong> Open-source contributor to React ecosystem libraries; speaker at JSConf Vienna 2031.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

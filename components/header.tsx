@@ -1,36 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { FileText, User, LogOut } from 'lucide-react'
+import { FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { createClient } from '@/lib/supabase/client'
-import { useEffect, useState } from 'react'
-import type { User as SupabaseUser } from '@supabase/supabase-js'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 export function Header() {
-  const [user, setUser] = useState<SupabaseUser | null>(null)
-  const [loading, setLoading] = useState(true)
-  const supabase = createClient()
+  const pathname = usePathname()
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-      setLoading(false)
-    }
-    getUser()
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: string, session: any) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [supabase.auth])
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-    window.location.href = '/'
-  }
+  const navItems = [
+    { name: 'Resume Creator', href: '/resume-creator' },
+    { name: 'Letter Maker', href: '/letter-maker' },
+    { name: 'Merge PDF', href: '/merge-pdf' },
+  ]
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -42,32 +25,19 @@ export function Header() {
           <span className="text-xl font-semibold tracking-tight">CVMaker</span>
         </Link>
 
-        <nav className="flex items-center gap-2">
-          {loading ? (
-            <div className="h-9 w-20 animate-pulse rounded-md bg-muted" />
-          ) : user ? (
-            <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/dashboard" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Dashboard
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleLogout} className="flex items-center gap-2 bg-transparent">
-                <LogOut className="h-4 w-4" />
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/auth/login">Login</Link>
-              </Button>
-              <Button size="sm" asChild>
-                <Link href="/auth/sign-up">Sign Up</Link>
-              </Button>
-            </>
-          )}
+        <nav className="hidden md:flex items-center gap-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-foreground/80",
+                pathname === item.href ? "text-foreground" : "text-foreground/60"
+              )}
+            >
+              {item.name}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
 import { PDFDocument } from 'pdf-lib'
 
 export async function POST(request: NextRequest) {
@@ -51,18 +50,6 @@ export async function POST(request: NextRequest) {
     // Convert to base64 data URI
     const base64 = Buffer.from(mergedPdfBytes).toString('base64')
     const dataUri = `data:application/pdf;base64,${base64}`
-
-    // If user is logged in, save to database
-    if (userId) {
-      const supabase = await createClient()
-      
-      await supabase.from('user_documents').insert({
-        user_id: userId,
-        document_type: 'merged_pdf',
-        file_name: `merged-${fileNames.join('-').substring(0, 50)}.pdf`,
-        file_url: dataUri
-      })
-    }
 
     return NextResponse.json({ 
       success: true, 

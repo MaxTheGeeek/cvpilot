@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume – Sophia Reinhart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .page {
+      width: 794px;
+      background: #ffffff;
+      padding: 44px 48px 44px 48px;
+      color: #1e1e1e;
+    }
+
+    /* ── HEADER ── */
+    .header-name {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      color: #1a1a1a;
+      line-height: 1.1;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin-top: 4px;
+    }
+
+    .header-contact {
+      font-size: 12px;
+      color: #3a3a3a;
+      margin-top: 5px;
+    }
+
+    /* ── SECTION BANNER ── */
+    .section { margin-top: 18px; }
+
+    .section-title {
+      background: #d9d9d9;
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      font-style: italic;
+      color: #2a2a2a;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* ── SUMMARY ── */
+    .summary-text {
+      font-size: 12px;
+      line-height: 1.7;
+      color: #2a2a2a;
+      text-align: justify;
+    }
+
+    /* ── ENTRIES ── */
+    .entry { margin-bottom: 13px; }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .entry-company {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .entry-dates {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1a1a1a;
+      white-space: nowrap;
+    }
+
+    .entry-subtitle {
+      font-size: 12px;
+      color: #3a3a3a;
+      margin-top: 1px;
+    }
+
+    ul.bullets {
+      list-style: disc;
+      padding-left: 22px;
+      margin-top: 5px;
+    }
+
+    ul.bullets li {
+      font-size: 12px;
+      line-height: 1.65;
+      color: #2a2a2a;
+    }
+
+    /* ── SKILLS GRID ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px 0;
+    }
+
+    .skills-grid span {
+      font-size: 12px;
+      line-height: 1.85;
+      color: #2a2a2a;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 1. NAME -->
+  <div class="header-name">SOPHIA REINHART</div>
+
+  <!-- 2. ROLE -->
+  <div class="header-title">PRODUCT DESIGNER</div>
+
+  <!-- 3. CONTACT & ADDRESS -->
+  <div class="header-contact">
+    58 Birchwood Lane, Lakeside City &nbsp;|&nbsp; sophia.reinhart@designhub.io &nbsp;|&nbsp; www.sophiareinhart.io
+  </div>
+
+  <!-- 4. SUMMARY -->
+  <div class="section">
+    <div class="section-title">Summary</div>
+    <p class="summary-text">
+      Product Designer with a passion for creating user-centered digital experiences that balance aesthetic
+      clarity with functional depth. Proven ability to lead end-to-end design processes — from discovery
+      and user research through prototyping and delivery. Experienced collaborating with cross-functional
+      teams in fast-paced environments, translating ambiguous problems into elegant, scalable solutions
+      that drive measurable business outcomes.
+    </p>
+  </div>
+
+  <!-- 5. WORK EXPERIENCE -->
+  <div class="section">
+    <div class="section-title">Work Experience</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-company">Lead Product Designer, Helion Software</span>
+        <span class="entry-dates">Mar 2023 - Present</span>
+      </div>
+      <ul class="bullets">
+        <li>Spearheaded the redesign of the core SaaS dashboard, improving user task completion rate by 22%.</li>
+        <li>Established a shared component library in Figma, cutting design-to-dev handoff time by 35%.</li>
+        <li>Facilitated weekly design critiques and usability review sessions across product squads.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-company">UX Designer, Cobalt Digital Agency</span>
+        <span class="entry-dates">Sep 2020 - Feb 2023</span>
+      </div>
+      <ul class="bullets">
+        <li>Designed end-to-end user flows for 10+ client projects spanning fintech, health, and e-commerce.</li>
+        <li>Conducted moderated usability sessions and synthesized findings into actionable design recommendations.</li>
+        <li>Collaborated with engineers to ensure pixel-accurate implementation of all design deliverables.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-company">Freelance UI Designer, Vantara Startup</span>
+        <span class="entry-dates">Jun 2019 - Aug 2020</span>
+      </div>
+      <ul class="bullets">
+        <li>Designed the full mobile app UI for a fintech startup from wireframes to high-fidelity prototypes.</li>
+        <li>Worked directly with the founding team to iterate on flows based on early user testing feedback.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. SKILLS -->
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <span>Figma &amp; Sketch</span>
+      <span>Interaction Design</span>
+      <span>Accessibility Standards</span>
+      <span>User Research &amp; Interviews</span>
+      <span>Visual Hierarchy</span>
+      <span>Responsive Design</span>
+      <span>Information Architecture</span>
+      <span>Usability Testing</span>
+      <span>Design Systems</span>
+    </div>
+  </div>
+
+  <!-- 7. EDUCATION & CERTIFICATES -->
+  <div class="section">
+    <div class="section-title">Education &amp; Certificates</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-company">Master of Science in Human-Computer Interaction</span>
+        <span class="entry-dates">Sep 2018 - Jun 2020</span>
+      </div>
+      <div class="entry-subtitle">Northgate Institute of Technology</div>
+      <ul class="bullets">
+        <li>Specialization in Cognitive Design and Digital Accessibility.</li>
+        <li>Thesis on "Reducing Cognitive Load in Enterprise Dashboard Interfaces".</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-company">Bachelor of Arts in Visual Communication</span>
+        <span class="entry-dates">Aug 2014 - May 2018</span>
+      </div>
+      <div class="entry-subtitle">Westfield College of Arts</div>
+      <ul class="bullets">
+        <li>Relevant coursework in Typography, Motion Graphics, and Brand Identity.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-company">Google UX Design Certificate</span>
+        <span class="entry-dates">Issued March 2021</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-company">Nielsen Norman Group UX Certification (UXMC)</span>
+        <span class="entry-dates">Issued November 2022</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. ADDITIONAL INFORMATION -->
+  <div class="section">
+    <div class="section-title">Additional Information</div>
+    <ul class="bullets">
+      <li><b>Languages:</b> English, German, Spanish.</li>
+      <li><b>Awards:</b> Best Design Innovation Award (2022), UX Mentor of the Quarter (2023).</li>
+      <li><b>Activities:</b> Design Sprint Facilitator – Internal Hackathon Lead (2024); volunteer mentor at Ladies that UX Vienna.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
