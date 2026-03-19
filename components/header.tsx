@@ -5,6 +5,7 @@ import { FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { ModeToggle } from '@/components/mode-toggle'
 
 export function Header() {
   const pathname = usePathname()
@@ -38,6 +39,7 @@ export function Header() {
               {item.name}
             </Link>
           ))}
+          <ModeToggle />
         </nav>
       </div>
     </header>
