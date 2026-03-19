@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, MedievalSharp } from 'next/font/google'
 import Script from 'next/script'
 import { CookieConsent } from '@/components/cookie-consent'
 import { AnalyticsManager } from '@/components/analytics-manager'
@@ -9,6 +9,11 @@ import { ThemeProvider } from '@/components/theme-provider'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const fantasyFont = MedievalSharp({ 
+  weight: '400',
+  subsets: ["latin"],
+  variable: '--font-fantasy',
+});
 
 export const viewport: Viewport = {
   themeColor: '#2563eb', // Primary blue
@@ -120,7 +125,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
         {/* End Google Tag Manager */}
       </head>
-      <body className={`font-sans antialiased`}>
+      <body className={`font-sans antialiased ${fantasyFont.variable}`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

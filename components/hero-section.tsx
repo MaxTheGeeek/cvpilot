@@ -1,4 +1,6 @@
 import { FileText, Sparkles, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export function HeroSection() {
   return (
@@ -47,6 +49,21 @@ export function HeroSection() {
                 <Sparkles className="h-4 w-4 text-primary" />
               </div>
               <span>PDF Merge Tool</span>
+            </div>
+          </div>
+
+          <div className="mt-16">
+            <h2 className="mb-8 text-2xl font-semibold tracking-tight">Select a Tool to Start</h2>
+            <div className="flex flex-col sm:flex-row justify-center gap-6">
+              <Button size="lg" className="w-full sm:w-44" asChild>
+                <Link href="/resume-creator">Resume Creator</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="w-full sm:w-44" asChild>
+                <Link href="/letter-maker">Letter Maker</Link>
+              </Button>
+              <Button size="lg" variant="secondary" className="w-full sm:w-44" asChild>
+                <Link href="/merge-pdf">Merge PDF</Link>
+              </Button>
             </div>
           </div>
         </div>
