@@ -16,21 +16,18 @@ const fantasyFont = MedievalSharp({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#2563eb', // Primary blue
+  themeColor: '#5873B2', // Primary blue
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
 }
 
 export const metadata: Metadata = {
-  title: 'CVMaker | Free Professional Cover Letter & Resume Builder',
-  description: 'Create perfect cover letters and resumes in minutes. Free PDF generator with professional templates. AI-powered writing assistance, multi-language support (English/German).',
+  title: 'Professional Resume Builder | ATS-Friendly CV & Cover Letter Generator',
+  description: 'Create professional resumes with ATS score 95+, modern templates, and instant PDF export. Perfect for developers and experts.',
   applicationName: 'CVMaker',
   authors: [{ name: 'CVMaker Team' }],
   keywords: [
-    'cover letter generator',
-    'cv maker',
-    'resume builder',
     'pdf resume',
     'job application tool',
     'cover letter templates',
@@ -126,6 +123,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* End Google Tag Manager */}
       </head>
       <body className={`font-sans antialiased ${fantasyFont.variable}`}>
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "CVMaker",
+              "operatingSystem": "Web",
+              "applicationCategory": "BusinessApplication",
+              "description": "Create professional resumes with ATS score 95+, modern templates, and instant PDF export.",
+              "offers": {
+                "@type": "Offer",
+                "price": "0.00",
+                "priceCurrency": "USD"
+              }
+            })
+          }}
+        />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

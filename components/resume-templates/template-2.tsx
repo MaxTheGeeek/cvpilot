@@ -7,9 +7,9 @@ export function Template2() {
 
   // Color mappings
   const colorMap = {
-    blue: '#1a4e7a',
-    green: '#2d8a56',
-    black: '#1a1a1a',
+    blue: '#5873B2',
+    green: '#166534',
+    black: '#000000',
     gray: '#4b5563'
   }
   const primaryColor = colorMap[themeColor] || colorMap.blue

@@ -3,6 +3,7 @@ import { create } from 'zustand'
 export interface PersonalInfo {
   firstName: string
   lastName: string
+  currentRole: string
   email: string
   linkedin: string
   github: string
@@ -24,7 +25,11 @@ export interface CompanyInfo {
 
 export interface CoverLetterState {
   // Current step in the form
-  currentStep: 'templates' | 'personal' | 'company' | 'review' | 'generating' | 'download'
+  currentStep: 'settings' | 'personal' | 'company' | 'position' | 'content'
+
+  // Letter Theme Color
+  themeColor: 'blue' | 'green' | 'black' | 'gray'
+  setThemeColor: (color: 'blue' | 'green' | 'black' | 'gray') => void
 
   // Language
   language: 'en' | 'de'
@@ -55,7 +60,6 @@ export interface CoverLetterState {
 
   // Actions
   setCurrentStep: (step: CoverLetterState['currentStep']) => void
-  setSelectedTemplate: (templateId: string | null) => void
   setPersonalInfo: (info: Partial<PersonalInfo>) => void
   setCompanyInfo: (info: Partial<CompanyInfo>) => void
   setCoverLetterContent: (content: string) => void
@@ -77,6 +81,7 @@ export interface CoverLetterState {
 const defaultPersonalInfo: PersonalInfo = {
   firstName: '',
   lastName: '',
+  currentRole: '',
   email: '',
   linkedin: '',
   github: '',
@@ -94,12 +99,11 @@ const defaultCompanyInfo: CompanyInfo = {
   companyAspects: '',
 }
 
+export const defaultLetterContentEn = `Dear Hiring Manager,
 
-const defaultCoverLetterContentEn = `Dear Hiring Manager,
+I am writing to express my strong interest in the open position. With my background and experience, I am confident that I would be a valuable addition to your team.
 
-I am writing to express my strong interest in the [Position] position at [Company Name]. With my background and experience, I am confident that I would be a valuable addition to your team.
-
-Throughout my career, I have developed strong skills in [relevant skills]. I am particularly drawn to [Company Name] because of [company attributes that appeal to you].
+Throughout my career, I have developed strong skills relevant to this role. I am particularly drawn to your company because of its strong reputation and innovative approach.
 
 I am excited about the opportunity to contribute to your team and would welcome the chance to discuss how my experience aligns with your needs.
 
@@ -108,11 +112,11 @@ Thank you for considering my application. I look forward to hearing from you.
 Best regards,
 [Your Name]`
 
-const defaultCoverLetterContentDe = `Sehr geehrte Damen und Herren,
+export const defaultLetterContentDe = `Sehr geehrte Damen und Herren,
 
-mit großem Interesse bewerbe ich mich um die Position als [Position] bei [Company Name]. Aufgrund meiner bisherigen Erfahrungen bin ich überzeugt, einen wertvollen Beitrag zu Ihrem Team leisten zu können.
+hiermit bewerbe ich mich mit großem Interesse um die offene Position. Aufgrund meiner bisherigen Erfahrungen bin ich überzeugt, einen wertvollen Beitrag zu Ihrem Team leisten zu können.
 
-In meiner beruflichen Laufbahn konnte ich umfassende Kenntnisse in [relevante Fähigkeiten] erwerben. Besonders an [Company Name] reizt mich [Unternehmensmerkmale].
+In meiner beruflichen Laufbahn konnte ich umfassende fachliche Kenntnisse erwerben. Besonders an Ihrem Unternehmen reizt mich die Innovationskraft und die Unternehmenskultur.
 
 Ich freue mich über die Möglichkeit, meine Motivation und Qualifikationen in einem persönlichen Gespräch näher zu erläutern.
 
@@ -122,27 +126,28 @@ Mit freundlichen Grüßen,
 [Your Name]`
 
 export const useCoverLetterStore = create<CoverLetterState>((set) => ({
-  currentStep: 'templates',
+  currentStep: 'settings',
+  themeColor: 'blue',
   language: 'en',
-  selectedTemplate: null,
+  selectedTemplate: 'minimal',
   personalInfo: defaultPersonalInfo,
   companyInfo: defaultCompanyInfo,
-  coverLetterContent: defaultCoverLetterContentEn,
+  coverLetterContent: defaultLetterContentEn,
   generatedFileUrl: null,
   activeTab: 'cv-creator',
   pdfFiles: [],
   mergedPdfUrl: null,
   isMerging: false,
 
+  setThemeColor: (color) => set({ themeColor: color }),
   setCurrentStep: (step) => set({ currentStep: step }),
   setLanguage: (lang) => set((state) => ({
     language: lang,
-    // Reset content to default language template if it matches the default content of the previous language
-    coverLetterContent: state.coverLetterContent === defaultCoverLetterContentEn || state.coverLetterContent === defaultCoverLetterContentDe
-      ? (lang === 'en' ? defaultCoverLetterContentEn : defaultCoverLetterContentDe)
+    // Reset content to default language template if it was unedited
+    coverLetterContent: state.coverLetterContent === defaultLetterContentEn || state.coverLetterContent === defaultLetterContentDe
+      ? (lang === 'en' ? defaultLetterContentEn : defaultLetterContentDe)
       : state.coverLetterContent
   })),
-  setSelectedTemplate: (templateId) => set({ selectedTemplate: templateId }),
   setPersonalInfo: (info) => set((state) => ({
     personalInfo: { ...state.personalInfo, ...info }
   })),
@@ -165,12 +170,13 @@ export const useCoverLetterStore = create<CoverLetterState>((set) => ({
   clearPdfFiles: () => set({ pdfFiles: [], mergedPdfUrl: null }),
 
   resetForm: () => set({
-    currentStep: 'templates',
-    selectedTemplate: null,
+    currentStep: 'settings',
+    selectedTemplate: 'minimal',
+    themeColor: 'blue',
     language: 'en',
     personalInfo: defaultPersonalInfo,
     companyInfo: defaultCompanyInfo,
-    coverLetterContent: defaultCoverLetterContentEn,
+    coverLetterContent: defaultLetterContentEn,
     generatedFileUrl: null,
   }),
 

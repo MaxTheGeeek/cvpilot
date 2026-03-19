@@ -13,6 +13,12 @@ export function Footer() {
             <span className="text-xl font-bold tracking-tight font-fantasy">CVMaker</span>
           </Link>
 
+          <nav className="flex items-center gap-4 text-sm font-medium text-muted-foreground">
+            <Link href="/resume-builder" className="transition-colors hover:text-primary">Resume Builder</Link>
+            <Link href="/cover-letter-generator" className="transition-colors hover:text-primary">Cover Letter Generator</Link>
+            <Link href="/merge-pdf" className="transition-colors hover:text-primary">Merge PDF</Link>
+          </nav>
+          
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <Link href="/privacy-policy" className="hover:underline hover:text-foreground transition-colors">Privacy Policy</Link>
             <span>&bull;</span>

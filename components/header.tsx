@@ -24,19 +24,16 @@ export function Header() {
           <span className="text-2xl font-bold tracking-tight font-fantasy">CVMaker</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-foreground/80",
-                pathname === item.href ? "text-foreground" : "text-foreground/60"
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-6 md:flex">
+          <Link href="/resume-builder" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/resume-builder' ? 'text-primary' : 'text-muted-foreground')}>
+            Resume Builder
+          </Link>
+          <Link href="/cover-letter-generator" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/cover-letter-generator' ? 'text-primary' : 'text-muted-foreground')}>
+            Cover Letter Generator
+          </Link>
+          <Link href="/merge-pdf" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/merge-pdf' ? 'text-primary' : 'text-muted-foreground')}>
+            Merge PDF
+          </Link>
           <ModeToggle />
         </nav>
       </div>

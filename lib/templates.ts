@@ -18,7 +18,7 @@ export const templates: Template[] = [
     description: 'Professional design with a bold blue header',
     style: 'professional',
     image: '/templates/blue-header.png',
-    colors: { primary: '#2563eb', secondary: '#1e40af', accent: '#3b82f6' }
+    colors: { primary: '#5873B2', secondary: '#425a94', accent: '#6c89ca' }
   },
   {
     id: 'green-line',
@@ -58,7 +58,7 @@ export const templates: Template[] = [
     description: 'Structured layout with a dedicated info box',
     style: 'modern',
     image: '/templates/blue-infobox.png',
-    colors: { primary: '#2563eb', secondary: '#1d4ed8', accent: '#60a5fa' }
+    colors: { primary: '#5873B2', secondary: '#425a94', accent: '#6c89ca' }
   },
   {
     id: 'black-footer',
@@ -82,6 +82,6 @@ export const templates: Template[] = [
     description: 'Focus on typography with green titles',
     style: 'creative',
     image: '/templates/green-title.png',
-    colors: { primary: '#16a34a', secondary: '#15803d', accent: '#22c55e' }
+    colors: { primary: '#166534', secondary: '#14532d', accent: '#166534' }
   }
 ]
