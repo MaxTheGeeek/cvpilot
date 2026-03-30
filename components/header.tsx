@@ -25,6 +25,9 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
+          <Link href="/ats-system" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/ats-system' ? 'text-primary' : 'text-muted-foreground')}>
+            ATS System
+          </Link>
           <Link href="/resume-builder" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/resume-builder' ? 'text-primary' : 'text-muted-foreground')}>
             Resume Builder
           </Link>

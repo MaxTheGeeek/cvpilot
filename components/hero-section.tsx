@@ -16,9 +16,9 @@ export function HeroSection() {
           </div>
           
           <h1 className="mb-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            Professional Resume Builder 
+            Free AI Resume Builder & 
             <span className="relative mx-2 inline-block text-primary">
-              for Experts
+              Cover Letter Generator
               <svg aria-hidden="true" className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 8.5C50 2.5 150 2.5 198 8.5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-primary/30" />
               </svg>
