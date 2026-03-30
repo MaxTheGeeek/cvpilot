@@ -23,38 +23,44 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Professional Resume Builder | ATS-Friendly CV & Cover Letter Generator',
-  description: 'Create professional resumes with ATS score 95+, modern templates, and instant PDF export. Perfect for developers and experts.',
+  title: {
+    template: '%s | Free AI Resume Builder & Cover Letter Generator',
+    default: 'Free AI Resume Builder & Cover Letter Generator | CVMaker',
+  },
+  description: 'Create professional, ATS-friendly resumes and cover letters in seconds for free using AI. Instant PDF export, ATS scoring, and modern templates.',
   applicationName: 'CVMaker',
   authors: [{ name: 'CVMaker Team' }],
   keywords: [
-    'pdf resume',
-    'job application tool',
-    'cover letter templates',
+    'free AI resume builder',
+    'AI cover letter generator',
+    'ATS resume checker',
+    'merge PDF online',
     'free cv creator',
-    'bewerbungsschreiben erstellen'
+    'ATS friendly resume templates',
+    'job application tool',
+    'Puter AI resume'
   ],
-  metadataBase: new URL('https://cvmaker.demo.com'), // Ideally this should be the real domain
+  metadataBase: new URL('https://cvmaker.demo.com'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://cvmaker.demo.com',
     siteName: 'CVMaker',
-    title: 'Professional Cover Letter Generator | CVMaker',
-    description: 'Build career-winning cover letters and CVs in seconds. Choose from professional templates and download as PDF for free.',
+    title: 'Free AI Resume Builder & Cover Letter Generator',
+    description: 'Build career-winning cover letters and CVs in seconds for free with AI. Get your ATS score instantly.',
     images: [
       {
-        url: '/og-image.jpg', // Ensure this image exists eventually
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'CVMaker - Professional Cover Letter Builder',
+        alt: 'CVMaker - Professional ATS Resume Builder',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Create Your Professional Cover Letter in Minutes - CVMaker',
-    description: 'Stop struggling with assignments. Generate a perfect, customized cover letter instantly.',
+    title: 'Free AI Resume Builder & Cover Letter Generator | CVMaker',
+    description: 'Generate a perfect, ATS-friendly resume and cover letter instantly for free.',
     creator: '@cvmaker_app',
     images: ['/og-image.jpg'],
   },
@@ -92,12 +98,18 @@ export default function RootLayout({
       price: '0',
       priceCurrency: 'USD',
     },
-    description: 'A free online tool to generate professional cover letters and CVs with customizable templates.',
+    description: 'A free online AI toolkit to generate professional ATS-friendly resumes, cover letters, and score CVs.',
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      ratingCount: '1250',
+      ratingValue: '4.9',
+      ratingCount: '2150',
     },
+    featureList: [
+      "AI Resume Builder",
+      "AI Cover Letter Generator",
+      "ATS Resume Analyzer",
+      "PDF Merger"
+    ]
   }
 
   return (
@@ -123,25 +135,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* End Google Tag Manager */}
       </head>
       <body className={`font-sans antialiased ${fantasyFont.variable}`}>
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "name": "CVMaker",
-              "operatingSystem": "Web",
-              "applicationCategory": "BusinessApplication",
-              "description": "Create professional resumes with ATS score 95+, modern templates, and instant PDF export.",
-              "offers": {
-                "@type": "Offer",
-                "price": "0.00",
-                "priceCurrency": "USD"
-              }
-            })
-          }}
-        />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

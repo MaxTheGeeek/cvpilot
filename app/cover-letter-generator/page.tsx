@@ -3,8 +3,8 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 
 export const metadata = {
-  title: 'Cover Letter Generator | Generate Professional Cover Letters',
-  description: 'Instantly generate engaging, customizable cover letters perfectly matched to your resume.',
+  title: 'Free AI Cover Letter Generator | Tailor Your Application instantly',
+  description: 'Instantly generate an engaging, ATS-optimized cover letter perfectly matched to your resume and the job description using our free AI generator.',
 };
 
 export default function LetterMakerPage() {

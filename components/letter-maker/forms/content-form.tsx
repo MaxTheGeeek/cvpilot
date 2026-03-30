@@ -1,11 +1,13 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useCoverLetterStore, defaultLetterContentEn, defaultLetterContentDe } from '@/lib/store'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { RotateCcw } from 'lucide-react'
+import { RotateCcw, Sparkles } from 'lucide-react'
+import { toast } from 'sonner'
+import { puter } from '@heyputer/puter.js'
 
 export function ContentForm() {
   const { 
@@ -16,6 +18,8 @@ export function ContentForm() {
     setCoverLetterContent, 
     setCurrentStep 
   } = useCoverLetterStore()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   // Generate generic text function
   const generateText = () => {
@@ -68,36 +72,79 @@ ${personalInfo.firstName} ${personalInfo.lastName}`.trim()
     setCoverLetterContent(generateText())
   }
 
+  const handleAIGenerate = async () => {
+    setIsLoading(true)
+    try {
+      const prompt = `You are an expert cover letter writer. 
+Generate a professional cover letter based on the following details.
+Language: ${language === 'de' ? 'German' : 'English'}
+Output ONLY the cover letter content. Do not include placeholders like [Your Name] if the information is provided.
+
+Personal Information:
+- Name: ${personalInfo?.firstName || ''} ${personalInfo?.lastName || ''}
+- Current Role: ${personalInfo?.currentRole || ''}
+- Skills: ${personalInfo?.skills || ''}
+
+Company & Position Information:
+- Company Name: ${companyInfo?.companyName || ''}
+- Job Title: ${companyInfo?.position || ''}
+- Hiring Manager/Contact: ${companyInfo?.contactPerson || 'Hiring Manager'}
+- Company Aspects/Details: ${companyInfo?.companyAspects || ''}`;
+
+      const response = await puter.ai.chat(prompt, { stream: true })
+      
+      let generatedText = ''
+      for await (const part of response) {
+        if (part?.text) {
+          generatedText += part.text
+          setCoverLetterContent(generatedText)
+        }
+      }
+    } catch (error) {
+      console.error("Puter AI Error:", error)
+      toast.error("Failed to generate with AI. Ensure you are connected to Puter.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-medium">Letter Content</h3>
           <p className="text-sm text-muted-foreground">
-            Edit your auto-generated cover letter content below.
+            Edit your generated cover letter content below.
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={handleRegenerate} className="flex gap-2">
-          <RotateCcw className="h-4 w-4" />
-          Regenerate
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={handleRegenerate} className="flex gap-2" disabled={isLoading}>
+            <RotateCcw className="h-4 w-4" />
+            <span className="hidden sm:inline">Reset</span>
+          </Button>
+          <Button variant="default" size="sm" onClick={handleAIGenerate} className="flex gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0" disabled={isLoading}>
+            <Sparkles className="h-4 w-4" />
+            {isLoading ? 'Generating...' : 'AI Generate'}
+          </Button>
+        </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2 relative">
         <Label htmlFor="content">Letter Body</Label>
         <Textarea 
           id="content"
           value={coverLetterContent}
           onChange={(e) => setCoverLetterContent(e.target.value)}
           className="min-h-[400px] resize-y font-mono text-sm leading-relaxed"
+          disabled={isLoading}
         />
-        <p className="text-xs text-muted-foreground text-right">
+        <p className="text-xs text-muted-foreground text-right mt-1">
           {coverLetterContent.length} characters
         </p>
       </div>
 
       <div className="flex justify-between pt-4">
-        <Button variant="outline" onClick={() => setCurrentStep('position')}>
+        <Button variant="outline" onClick={() => setCurrentStep('position')} disabled={isLoading}>
           Previous
         </Button>
       </div>

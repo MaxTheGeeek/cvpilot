@@ -3,8 +3,8 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 
 export const metadata = {
-  title: 'Merge PDF securely | Fast & Free Document Tools',
-  description: 'Easily merge your resume and cover letter into a scalable single PDF securely.',
+  title: 'Merge PDF Online | Combine Resume & Cover Letter Free',
+  description: 'Easily merge your resume and cover letter into a scalable single PDF securely and for free. No watermarks, rapid processing.',
 }
 
 export default function MergePdfPage() {
