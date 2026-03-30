@@ -3,7 +3,7 @@ import { useResumeStore } from '@/lib/store/useResumeStore'
 import { t } from '@/lib/i18n'
 
 export function Template1() {
-  const { data, language, themeColor } = useResumeStore()
+  const { data, language, themeColor, sectionOrder } = useResumeStore()
 
   // Color mappings
   const colorMap = {
@@ -83,86 +83,91 @@ export function Template1() {
         </div>
 
         {/* 4. SUMMARY */}
-        {data.summary && (
-          <div className="section">
-            <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
-              {t('summary', language)}
-            </div>
-            <p className="summary-text whitespace-pre-wrap">{data.summary}</p>
-          </div>
-        )}
-
-        {/* 5. WORK EXPERIENCE */}
-        {data.experience.length > 0 && (
-          <div className="section">
-            <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
-              {t('workExperience', language)}
-            </div>
-            {data.experience.map(exp => (
-              <div className="entry" key={exp.id}>
-                <div className="entry-company">{exp.company}</div>
-                <div className="entry-role">{exp.role} &nbsp;|&nbsp; <span>{exp.startDate} – {exp.endDate}</span></div>
-                {formatBullets(exp.description)}
+        {sectionOrder.map((section: string) => {
+          if (section === 'summary' && data.summary) {
+            return (
+              <div className="section" key="summary">
+                <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
+                  {t('summary', language)}
+                </div>
+                <p className="summary-text whitespace-pre-wrap">{data.summary}</p>
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* 6. SKILLS */}
-        {data.skills.length > 0 && (
-          <div className="section">
-            <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
-              {t('skills', language)}
-            </div>
-            <div className="skills-grid">
-              {data.skills.map((skill, i) => (
-                <span key={i}>{skill}</span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 7. EDUCATION */}
-        {data.education.length > 0 && (
-          <div className="section">
-            <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
-              {t('education', language)}
-            </div>
-            {data.education.map(edu => (
-              <div className="entry" key={edu.id}>
-                <div className="entry-company">{edu.degree}</div>
-                <div className="entry-role">{edu.institution} &nbsp;|&nbsp; <span>{edu.date}</span></div>
-                {formatBullets(edu.description)}
+            )
+          }
+          if (section === 'experience' && data.experience.length > 0) {
+            return (
+              <div className="section" key="experience">
+                <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
+                  {t('workExperience', language)}
+                </div>
+                {data.experience.map(exp => (
+                  <div className="entry" key={exp.id}>
+                    <div className="entry-company">{exp.company}</div>
+                    <div className="entry-role">{exp.role} &nbsp;|&nbsp; <span>{exp.startDate} – {exp.endDate}</span></div>
+                    {formatBullets(exp.description)}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* 8. ADDITIONAL INFORMATION */}
-        {data.additionalInfo.length > 0 && (
-          <div className="section">
-            <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
-              {t('additionalInfo', language)}
-            </div>
-            <ul className="bullets">
-              {data.additionalInfo.map((info, i) => (
-                <li key={i}>
-                  {(() => {
-                    const colonIndex = info.indexOf(':');
-                    if (colonIndex > -1) {
-                      return (
-                        <>
-                          <strong>{info.slice(0, colonIndex + 1)}</strong>{info.slice(colonIndex + 1)}
-                        </>
-                      )
-                    }
-                    return info;
-                  })()}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+            )
+          }
+          if (section === 'skills' && data.skills.length > 0) {
+            return (
+              <div className="section" key="skills">
+                <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
+                  {t('skills', language)}
+                </div>
+                <div className="skills-grid">
+                  {data.skills.map((skill, i) => (
+                    <span key={i}>{skill}</span>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+          if (section === 'education' && data.education.length > 0) {
+            return (
+              <div className="section" key="education">
+                <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
+                  {t('education', language)}
+                </div>
+                {data.education.map(edu => (
+                  <div className="entry" key={edu.id}>
+                    <div className="entry-company">{edu.degree}</div>
+                    <div className="entry-role">{edu.institution} &nbsp;|&nbsp; <span>{edu.date}</span></div>
+                    {formatBullets(edu.description)}
+                  </div>
+                ))}
+              </div>
+            )
+          }
+          if (section === 'additionalInfo' && data.additionalInfo.length > 0) {
+            return (
+              <div className="section" key="additionalInfo">
+                <div className="section-title" style={{ color: primaryColor, borderBottomColor: primaryColor }}>
+                  {t('additionalInfo', language)}
+                </div>
+                <ul className="bullets">
+                  {data.additionalInfo.map((info, i) => (
+                    <li key={i}>
+                      {(() => {
+                        const colonIndex = info.indexOf(':');
+                        if (colonIndex > -1) {
+                          return (
+                            <React.Fragment>
+                              <strong>{info.slice(0, colonIndex + 1)}</strong>{info.slice(colonIndex + 1)}
+                            </React.Fragment>
+                          )
+                        }
+                        return info;
+                      })()}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+          return null
+        })}
       </div>
     </div>
   )

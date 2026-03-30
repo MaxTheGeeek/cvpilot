@@ -7,13 +7,51 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Trash2, Edit2, Plus } from 'lucide-react'
+import { Trash2, Edit2, Plus, Sparkles } from 'lucide-react'
+import { toast } from 'sonner'
+import { puter } from '@heyputer/puter.js'
 
 export function ExperienceForm() {
   const { data, addExperience, updateExperience, deleteExperience } = useResumeStore()
   
   const [isEditing, setIsEditing] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [currentExp, setCurrentExp] = useState<Partial<WorkExperience>>({})
+
+  const handleEnhance = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    
+    setIsLoading(true)
+    try {
+      const isGeneratingFromScratch = !currentExp.description?.trim();
+      const prompt = `You are an expert ATS resume writer.
+${isGeneratingFromScratch 
+  ? `Generate 3-4 highly impactful, action-oriented bullet points for a ${currentExp.role || data.roleTitle || 'Professional'} working at ${currentExp.company || 'a company'}.`
+  : `Rewrite the following work experience description to be more impactful, action-oriented, and ATS-friendly for a ${currentExp.role || data.roleTitle || 'Professional'}.`
+}
+
+Format the output strictly as a bulleted list, where each bullet point starts with a hyphen "-".
+Focus on quantifiable achievements and strong action verbs.
+Do not include conversational text or placeholders. Just output the bullet points.
+
+${isGeneratingFromScratch ? '' : `Please enhance this text:\n\n${currentExp.description}`}`
+
+      const response = await puter.ai.chat(prompt, { stream: true })
+      
+      let generatedText = ''
+      for await (const part of response) {
+        if (part?.text) {
+          generatedText += part.text
+          setCurrentExp(prev => ({ ...prev, description: generatedText }))
+        }
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error("Failed to enhance experience. Ensure Puter is connected.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleSave = () => {
     if (!currentExp.company || !currentExp.role) return
@@ -64,19 +102,32 @@ export function ExperienceForm() {
             <Input value={currentExp.endDate || ''} onChange={(e) => setCurrentExp(prev => ({...prev, endDate: e.target.value}))} placeholder="Present" />
           </div>
           <div className="space-y-2 sm:col-span-2">
-            <Label>Description (Bullets separated by new lines)</Label>
+            <div className="flex justify-between items-center mb-2">
+              <Label>Description (Bullets separated by new lines)</Label>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleEnhance} 
+                disabled={isLoading || !currentExp.description} 
+                className="gap-1 h-7 text-xs bg-purple-50 hover:bg-purple-100 text-purple-700 border-purple-200"
+              >
+                <Sparkles className="h-3 w-3" />
+                {isLoading ? 'Enhancing...' : 'AI Enhance'}
+              </Button>
+            </div>
             <Textarea 
               value={currentExp.description || ''} 
               onChange={(e) => setCurrentExp(prev => ({...prev, description: e.target.value}))} 
               placeholder="- Built new features&#10;- Led a team" 
               className="h-32"
+              disabled={isLoading}
             />
           </div>
         </div>
 
         <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={() => { setIsEditing(false); setCurrentExp({}); }}>Cancel</Button>
-          <Button onClick={handleSave}>Save Entry</Button>
+          <Button variant="outline" onClick={() => { setIsEditing(false); setCurrentExp({}); }} disabled={isLoading}>Cancel</Button>
+          <Button onClick={handleSave} disabled={isLoading}>Save Entry</Button>
         </div>
       </div>
     )

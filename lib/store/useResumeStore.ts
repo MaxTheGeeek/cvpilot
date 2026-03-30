@@ -99,11 +99,13 @@ interface ResumeStore {
   template: 'template-1' | 'template-2'
   language: 'en' | 'de'
   themeColor: ThemeColor
+  sectionOrder: string[]
   data: ResumeData
   
   setTemplate: (template: 'template-1' | 'template-2') => void
   setLanguage: (lang: 'en' | 'de') => void
   setThemeColor: (color: ThemeColor) => void
+  setSectionOrder: (order: string[]) => void
   updateData: (data: Partial<ResumeData>) => void
   addExperience: (exp: WorkExperience) => void
   updateExperience: (id: string, exp: Partial<WorkExperience>) => void
@@ -118,11 +120,13 @@ export const useResumeStore = create<ResumeStore>((set) => ({
   template: 'template-1',
   language: 'en',
   themeColor: 'blue',
+  sectionOrder: ['summary', 'experience', 'skills', 'education', 'additionalInfo'],
   data: defaultResumeData,
   
   setTemplate: (template) => set({ template }),
   setLanguage: (language) => set({ language }),
   setThemeColor: (themeColor) => set({ themeColor }),
+  setSectionOrder: (sectionOrder) => set({ sectionOrder }),
   updateData: (newData) => set((state) => ({ data: { ...state.data, ...newData } })),
   
   addExperience: (exp) => set((state) => ({ data: { ...state.data, experience: [...state.data.experience, exp] } })),

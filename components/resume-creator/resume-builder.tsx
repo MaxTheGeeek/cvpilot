@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { ResumePreview } from './resume-preview'
 import { useResumeStore } from '@/lib/store/useResumeStore'
 import { Button } from '@/components/ui/button'
-import { Settings, User, FileText, Briefcase, Award, GraduationCap, Link } from 'lucide-react'
+import { Settings, User, FileText, Briefcase, Award, GraduationCap, Link, Download, ChevronRight, ChevronLeft } from 'lucide-react'
 
 // Placeholder Form Imports
 import { SettingsForm } from './forms/settings-form'
@@ -30,15 +30,32 @@ export function ResumeBuilder() {
     { id: 'additional', label: 'Additional Info', icon: Link, component: AdditionalInfoForm },
   ] as const
 
-  const ActiveComponent = steps.find(s => s.id === activeStep)?.component || SettingsForm
+  const currentStepIndex = steps.findIndex(s => s.id === activeStep)
+  const isFirstStep = currentStepIndex === 0
+  const isLastStep = currentStepIndex === steps.length - 1
+
+  const handleNext = () => {
+    if (!isLastStep) {
+      setActiveStep(steps[currentStepIndex + 1].id as StepId)
+    }
+  }
+
+  const handleBack = () => {
+    if (!isFirstStep) {
+      setActiveStep(steps[currentStepIndex - 1].id as StepId)
+    }
+  }
+
+  const ActiveComponent = (steps[currentStepIndex]?.component || SettingsForm) as React.ElementType
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Left Sidebar - Forms */}
-        <div className="lg:col-span-5 flex flex-col gap-6">
-          <div className="bg-background rounded-xl border border-border/50 shadow-sm p-2 flex overflow-x-auto gap-2 scrollbar-none">
+        <div className="lg:col-span-5 flex flex-col gap-6 h-[calc(100vh-12rem)]">
+          {/* Step Indicator Top Bar */}
+          <div className="bg-background rounded-xl border border-border/50 shadow-sm p-2 flex overflow-x-auto gap-2 scrollbar-none shrink-0">
             {steps.map(step => {
               const Icon = step.icon
               const isActive = activeStep === step.id
@@ -57,21 +74,42 @@ export function ResumeBuilder() {
             })}
           </div>
 
-          <div className="bg-background rounded-xl border border-border/50 shadow-sm p-6 overflow-y-auto max-h-[calc(100vh-16rem)]">
+          {/* Form Content Scrollable Area */}
+          <div className="bg-background rounded-xl border border-border/50 shadow-sm p-6 overflow-y-auto flex-1">
             <ActiveComponent />
           </div>
 
-          <Button 
-            className="w-full shadow-lg" 
-            size="lg" 
-            onClick={() => window.print()}
-          >
-            Download PDF
-          </Button>
+          {/* Bottom Navigation Toolbar */}
+          <div className="bg-background rounded-xl border border-border/50 shadow-sm p-4 flex justify-between items-center shrink-0">
+            <Button 
+              variant="outline" 
+              onClick={handleBack} 
+              disabled={isFirstStep}
+              className="w-28"
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" /> Back
+            </Button>
+
+            {isLastStep ? (
+              <Button 
+                onClick={() => window.print()}
+                className="w-40 shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              >
+                <Download className="h-4 w-4 mr-1" /> Download PDF
+              </Button>
+            ) : (
+              <Button 
+                onClick={handleNext}
+                className="w-28"
+              >
+                Next <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Right Panel - Live Preview */}
-        <div className="lg:col-span-7 hidden lg:block">
+        <div className="lg:col-span-7 hidden lg:block h-[calc(100vh-12rem)] overflow-y-auto">
           <ResumePreview />
         </div>
 
