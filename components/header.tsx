@@ -6,13 +6,16 @@ import { Button } from '@/components/ui/button'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { ModeToggle } from '@/components/mode-toggle'
+import { Menu } from 'lucide-react'
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 
 export function Header() {
   const pathname = usePathname()
 
   const navItems = [
-    { name: 'Resume Creator', href: '/resume-creator' },
-    { name: 'Letter Maker', href: '/letter-maker' },
+    { name: 'ATS System', href: '/ats-system' },
+    { name: 'Resume Builder', href: '/resume-builder' },
+    { name: 'Cover Letter Generator', href: '/cover-letter-generator' },
     { name: 'Merge PDF', href: '/merge-pdf' },
   ]
 
@@ -24,21 +27,51 @@ export function Header() {
           <span className="text-2xl font-bold tracking-tight font-fantasy">CVMaker</span>
         </Link>
 
+        {/* Desktop Nav */}
         <nav className="hidden items-center gap-6 md:flex">
-          <Link href="/ats-system" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/ats-system' ? 'text-primary' : 'text-muted-foreground')}>
-            ATS System
-          </Link>
-          <Link href="/resume-builder" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/resume-builder' ? 'text-primary' : 'text-muted-foreground')}>
-            Resume Builder
-          </Link>
-          <Link href="/cover-letter-generator" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/cover-letter-generator' ? 'text-primary' : 'text-muted-foreground')}>
-            Cover Letter Generator
-          </Link>
-          <Link href="/merge-pdf" className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === '/merge-pdf' ? 'text-primary' : 'text-muted-foreground')}>
-            Merge PDF
-          </Link>
+          {navItems.map((item) => (
+            <Link 
+              key={item.href}
+              href={item.href} 
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-primary", 
+                pathname === item.href ? 'text-primary' : 'text-muted-foreground'
+              )}
+            >
+              {item.name}
+            </Link>
+          ))}
           <ModeToggle />
         </nav>
+
+        {/* Mobile Nav */}
+        <div className="flex items-center gap-4 md:hidden">
+          <ModeToggle />
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Toggle Menu">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <nav className="flex flex-col gap-4 mt-8">
+                {navItems.map((item) => (
+                  <Link 
+                    key={item.href}
+                    href={item.href} 
+                    className={cn(
+                      "text-lg font-medium transition-colors hover:text-primary", 
+                      pathname === item.href ? 'text-primary' : 'text-muted-foreground'
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   )

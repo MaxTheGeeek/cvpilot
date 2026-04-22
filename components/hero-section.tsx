@@ -52,7 +52,10 @@ export function HeroSection() {
 
           <div className="mt-16">
             <h2 className="sr-only">Resume and Cover Letter Tools</h2>
-            <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-6">
+              <Button size="lg" className="w-full sm:w-44 shadow-lg hover:shadow-xl transition-all" asChild>
+                <Link href="/ats-system" aria-label="Analyze your resume with ATS">ATS System</Link>
+              </Button>
               <Button size="lg" className="w-full sm:w-44 shadow-lg hover:shadow-xl transition-all" asChild>
                 <Link href="/resume-builder" aria-label="Start building your resume">Resume Builder</Link>
               </Button>
