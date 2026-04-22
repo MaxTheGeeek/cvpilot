@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
-import { Upload, CheckCircle2, AlertCircle, RefreshCw, FileText } from 'lucide-react'
+import React, { useState, useRef, useEffect } from 'react'
+import { Upload, CheckCircle2, AlertCircle, RefreshCw, FileText, Search, Brain, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { puter } from '@heyputer/puter.js'
 
@@ -14,6 +15,74 @@ interface AtsScore {
     feedback: string;
   }>;
   overallFeedback: string;
+}
+
+const loadingSteps = [
+  { id: 1, icon: FileText, title: 'Extracting Data', desc: 'Reading PDF text...' },
+  { id: 2, icon: Search, title: 'Scanning Keywords', desc: 'Matching job tags...' },
+  { id: 3, icon: Brain, title: 'AI Evaluation', desc: 'Analyzing impact...' },
+  { id: 4, icon: CheckCircle2, title: 'Finalizing Score', desc: 'Generating feedback...' },
+];
+
+function LoadingAnimation() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => {
+        if (prev < loadingSteps.length - 1) {
+          return prev + 1;
+        }
+        return prev; // Stay on the last step until parent component finishes
+      });
+    }, 1500); // Advance every 1.5s
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="w-full max-w-3xl mx-auto py-8 sm:px-4">
+      <div className="relative flex justify-between">
+        {/* Background line */}
+        <div className="absolute top-6 left-0 w-full h-[2px] bg-border/60 -z-10" />
+
+        {/* Active progress line */}
+        <div 
+          className="absolute top-6 left-0 h-[2px] bg-primary -z-10 transition-all duration-500 ease-in-out" 
+          style={{ width: `${(activeStep / (loadingSteps.length - 1)) * 100}%` }}
+        />
+
+        {loadingSteps.map((step, index) => {
+          const isActive = index === activeStep;
+          const isCompleted = index < activeStep;
+          const Icon = step.icon;
+
+          return (
+            <div key={step.id} className="flex flex-col items-center relative z-10 w-24">
+              <div 
+                className={cn(
+                  "flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-500 bg-background",
+                  isActive ? "border-primary text-primary scale-110 shadow-lg shadow-primary/40" : 
+                  isCompleted ? "border-primary bg-primary text-primary-foreground" : 
+                  "border-muted-foreground/30 text-muted-foreground"
+                )}
+              >
+                {isCompleted ? <Check className="w-6 h-6" /> : <Icon className="w-6 h-6" />}
+              </div>
+              <div className="mt-4 text-center">
+                <p className={cn("text-xs sm:text-sm font-semibold transition-colors duration-300", isActive || isCompleted ? "text-foreground" : "text-muted-foreground")}>
+                  {step.title}
+                </p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 hidden sm:block">
+                  {step.desc}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export function AtsAnalyzer() {
@@ -112,36 +181,39 @@ ${text}`
 
   return (
     <div className="space-y-8">
-      {/* Upload Zone */}
-      <div 
-        className="border-2 border-dashed border-primary/20 bg-primary/5 rounded-2xl p-12 text-center hover:bg-primary/10 transition-colors cursor-pointer"
-        onClick={() => !isAnalyzing && fileInputRef.current?.click()}
-      >
-        <input 
-          type="file" 
-          accept="application/pdf"
-          className="hidden" 
-          ref={fileInputRef}
-          onChange={handleFileUpload}
-        />
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="bg-primary/10 p-4 rounded-full">
-            {isAnalyzing ? (
-              <RefreshCw className="h-8 w-8 text-primary animate-spin" />
-            ) : (
+      <input 
+        type="file" 
+        accept="application/pdf"
+        className="hidden" 
+        ref={fileInputRef}
+        onChange={handleFileUpload}
+      />
+
+      {/* Upload Zone or Loading Animation */}
+      {!isAnalyzing ? (
+        <div 
+          className="border-2 border-dashed border-primary/20 bg-primary/5 rounded-2xl p-12 text-center hover:bg-primary/10 transition-colors cursor-pointer"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <div className="bg-primary/10 p-4 rounded-full">
               <Upload className="h-8 w-8 text-primary" />
-            )}
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-1">
-              {isAnalyzing ? 'Analyzing Resume...' : 'Upload Resume PDF'}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              {isAnalyzing ? 'Extracting text and comparing against ATS standards...' : 'Drag and drop your PDF here or click to browse'}
-            </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-1">
+                Upload Resume PDF
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Drag and drop your PDF here or click to browse
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-card rounded-2xl border shadow-sm p-8 sm:p-12 animate-in fade-in zoom-in-95 duration-500">
+          <LoadingAnimation />
+        </div>
+      )}
 
       {/* Results Section */}
       {result && (
