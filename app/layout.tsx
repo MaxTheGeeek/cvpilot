@@ -46,11 +46,11 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://cvmaker.demo.com',
     siteName: 'CVMaker',
-    title: 'ATS-Friendly Resume Builder & Cover Letter Generator',
-    description: 'Get hired with a professional, ATS-friendly resume and cover letter built in seconds for free using AI. Get your ATS score instantly.',
+    title: 'ATS-Friendly Resume Builder & AI Resume Generator',
+    description: 'Check your resume ATS score instantly or let our advanced AI generate a high-scoring, ATS-friendly resume and cover letter for you.',
     images: [
       {
-        url: '/open-graph.png',
+        url: '/open-graph.png?v=2',
         width: 1200,
         height: 630,
         alt: 'ATS-Friendly Resume Builder',
@@ -59,10 +59,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ATS-Friendly Resume Builder & Cover Letter Generator | CVMaker',
-    description: 'Get hired with a professional, ATS-friendly resume and cover letter built in seconds for free using AI.',
+    title: 'ATS-Friendly Resume Builder & AI Resume Generator',
+    description: 'Check your resume ATS score instantly or let our advanced AI generate a high-scoring, ATS-friendly resume and cover letter for you.',
     creator: '@cvmaker_app',
-    images: ['/open-graph.png'],
+    images: ['/open-graph.png?v=2'],
   },
   robots: {
     index: true,
